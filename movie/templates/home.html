@@ -1,10 +1,5 @@
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
-
-<!-- <h1>Welcome to Home Page</h1>-->
-<h1>Welcome to Home Page, <span style="color: blue;">{{name}}</span></h1>
-<h2>This is full home page</h2>
+{% extends 'base.html' %}
+{% block content %}
 
 <div class="container">
     <form action="">
@@ -13,28 +8,36 @@
                 Search for Movie:
             </label>
             <input type="text" class="form-control" name="searchMovie"/>
-            </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
-        <p>Searching for {{searchTerm}}</p>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            {% for movie in movies %}
-            <div v-for="movie in movies" class="col">
-                <div class="card">
-                    <img class="card-img-top" src="{{ movie.image.url}}"/>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">{{movie.title}}</h5>
-                        <p class="card-text">{{movie.description}}</p>
-                    {% if movie.url %}
-                        <a href="{{ movie.url }}" class="btn btn-primary"> 
-                            Movie Link
-                        </a>
-                    {% endif%}
-                </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <p>Searching for {{searchTerm}}</p>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for movie in movies %}
+        <div v-for="movie in movies" class="col">
+            <div class="card">
+            <img src="{{movie.image.url }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">{{ movie.title }}</h5>                        
+                <p class="card-text">{{ movie.description }}</p>
+                <p class="card-text">Genre: {{ movie.genre }}</p>
+                <p class="card-text">Year: {{ movie.year }}</p>
+                {% if movie.url %}
+                    <a href="{{ movie.url }}"> Movie Link</a>
+                {% endif%}
             </div>
         </div>
-        {% endfor %}
-        </div>
-        <br />
-        <br />
     </div>
+        {% endfor %}
+    </div>
+    <br/>
+    <h2>Join our mailing list:</h2>
+    <form action="{% url 'signup' %}">
+        <div class="mb-3">
+            <label for="email" class="form-label">Enter your email: </label>
+            <input type="email" class="form-control" name="email" />
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+    </form>
+</div>
+{% endblock content %}
